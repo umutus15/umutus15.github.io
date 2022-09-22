@@ -1,3 +1,7 @@
+$.getJSON("fake-news-filtered.json", function(json) {
+    console.log("SUCCESS"); // this will show the info it in firebug console
+});
+
 const d = new Date();
 function generateRandomDate() {
 return new Date(+(new Date()) - Math.floor(Math.random() * 10000000000));
