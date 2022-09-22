@@ -1,5 +1,5 @@
 $.getJSON("fake-news-filtered.json", function(json) {
-    console.log("SUCCESS"); // this will show the info it in firebug console
+    console.log(json); // this will show the info it in firebug console
 });
 
 const d = new Date();
