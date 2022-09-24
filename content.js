@@ -29,20 +29,23 @@ document.getElementById("reportbutton").addEventListener("click", report_button)
 const d = new Date(); // date variable for tweet date
 
 function like_button() {
-  console.log("Pressed Like!")
+  console.log("Pressed Like!");
+  show_overlay("liked", current_news);
   change_news();
 }
 function share_button() {
-  console.log("Pressed Share!")
+  console.log("Pressed Share!");
+  show_overlay("shared", current_news);
   change_news();
 }
 function report_button() {
-  console.log("Pressed Report!")
+  console.log("Pressed Report!");
+  show_overlay("reported", current_news);
   change_news();
 }
 
 // Helper functions:
-function change_news(){
+function change_news(){  
   // Set new user and related data
   $.ajax({
     url: 'https://randomuser.me/api/',
@@ -65,6 +68,7 @@ function change_news(){
 
   // Set new article image
   document.getElementById("articleimg").src = "https://source.unsplash.com/random/?politics&1?" + new Date().getTime();
+
 }
 
 function generateRandomDate() { // Func for generating date between two days
@@ -82,5 +86,23 @@ function fake_or_real(random_entry){ //func for detecting fake or real
               return 1
             }
 }
+
+function show_overlay(action, news) {
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("overlay-txt").innerHTML = "";
+  var rel = "reliable."
+  if (news.reliability == "fake") {
+    rel = "unreliable."
+  }
+  document.getElementById("overlay-txt").innerHTML += "The news you " + action + " was " + rel;
+  document.getElementById("overlay-txt").innerHTML += "<br> Head over to the map to share it to the world";
+}
+
+function hide_overlay() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+document.getElementById("overlay").addEventListener("click", hide_overlay);
+
 
 change_news()
