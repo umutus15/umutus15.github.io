@@ -31,17 +31,14 @@ const d = new Date(); // date variable for tweet date
 function like_button() {
   console.log("Pressed Like!");
   show_overlay("liked", current_news);
-  change_news();
 }
 function share_button() {
   console.log("Pressed Share!");
   show_overlay("shared", current_news);
-  change_news();
 }
 function report_button() {
   console.log("Pressed Report!");
   show_overlay("reported", current_news);
-  change_news();
 }
 
 // Helper functions:
@@ -100,9 +97,9 @@ function show_overlay(action, news) {
 
 function hide_overlay() {
   document.getElementById("overlay").style.display = "none";
+  change_news();
 }
 
 document.getElementById("overlay").addEventListener("click", hide_overlay);
 
 
-change_news()
