@@ -1,7 +1,7 @@
 console.log("JS beginning")
 
 var json_data = {}; //where our news titles are stored
-var random_entry = 0; //var for picking random news
+var current_news = {};
 var tot_length; // total entries in database
 
 $.ajax({ //download the news database, pring how many entries there are
@@ -13,31 +13,37 @@ $.ajax({ //download the news database, pring how many entries there are
             console.log("Sucessfully downloaded data...");
             tot_length = JSON.parse(JSON.stringify(json)).length;
             console.log("Total entries: "+tot_length);
-            random_entry = getRandomInt(tot_length);
+            var random_entry = getRandomInt(tot_length);
+            current_news = json_data[random_entry];
         }
 });
 //console.log(json_data[random_entry].title)//testing
 
 
 //Associate buttons with functions
-document.getElementById("myBtn").addEventListener("click", real_button);
+document.getElementById("likebutton").addEventListener("click", like_button);
+document.getElementById("sharebutton").addEventListener("click", share_button);;
+document.getElementById("reportbutton").addEventListener("click", report_button);
 
-document.getElementById("myBtn2").addEventListener("click", fake_button);
 
 const d = new Date(); // date variable for tweet date
 
-function real_button() {
-  console.log("real button")
+function like_button() {
+  console.log("Pressed Like!")
   change_news();
 }
-
-function fake_button() {
-  console.log("fake button");
+function share_button() {
+  console.log("Pressed Share!")
+  change_news();
+}
+function report_button() {
+  console.log("Pressed Report!")
   change_news();
 }
 
 // Helper functions:
 function change_news(){
+  // Set new user and related data
   $.ajax({
     url: 'https://randomuser.me/api/',
     dataType: 'json',
@@ -45,11 +51,20 @@ function change_news(){
         document.getElementById("username").innerHTML =data.results[0].name.first+" "+data.results[0].name.last;//change name of person
         document.getElementById("userid").innerHTML = "@"+data.results[0].login.username;//change username
         document.getElementById("userpic").src = data.results[0].picture.thumbnail;//change profile picture
-        random_entry = getRandomInt(tot_length);//get random number for database
-        document.getElementById("articletitle").innerHTML = json_data[random_entry].title; //change title, get random entry from database
     }
   });
+
+  // Set new random date
   document.getElementById("postdate").innerHTML = (new generateRandomDate()).toLocaleString('en-US', { day:'numeric', month: 'long' }); //change date of the tweet
+
+  // Choose a new random news
+  var random_entry = getRandomInt(tot_length);
+  current_news = json_data[random_entry];
+  // Set new random news
+  document.getElementById("articletitle").innerHTML = current_news.title; //change title, get random entry from database
+
+  // Set new article image
+  document.getElementById("articleimg").src = "https://source.unsplash.com/random/?politics&1?" + new Date().getTime();
 }
 
 function generateRandomDate() { // Func for generating date between two days
@@ -60,7 +75,7 @@ function getRandomInt(max) { // Func for getting random int until max value prov
 }
 
 function fake_or_real(random_entry){ //func for detecting fake or real
-            if(json[random_entry].reliability === "fake"){ 
+            if(current_news.reliability === "fake"){ 
               return 0
             }
             else{
