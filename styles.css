@@ -1,3 +1,29 @@
+@font-face {
+  font-family: 'TwitterFont';
+  src: url('fonts/PICOBLA_.TTF') format('truetype'),
+       url('fonts/PICOWA__.TTF') format('truetype');
+}
+
+.logo {
+  font-family: 'TwitterFont', Fallback, sans-serif;
+  font-size: 64px;
+  color: #00acee;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.logo h1 {
+
+}
+
+.logo img {
+  height: 56px;
+  width: auto;
+  margin: 20px;
+  /*float: left;*/
+}
+
 .button {
   border: none;
   color: white;
