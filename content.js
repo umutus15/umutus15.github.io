@@ -42,14 +42,14 @@ function change_news(){
     url: 'https://randomuser.me/api/',
     dataType: 'json',
     success: function(data) {
-        document.getElementById("changename").innerHTML =data.results[0].name.first+" "+data.results[0].name.last;//change name of person
-        document.getElementById("changeid").innerHTML = data.results[0].login.username;//change username
-        document.getElementById("changeimg").src = data.results[0].picture.thumbnail;//change profile picture
+        document.getElementById("username").innerHTML =data.results[0].name.first+" "+data.results[0].name.last;//change name of person
+        document.getElementById("userid").innerHTML = "@"+data.results[0].login.username;//change username
+        document.getElementById("userpic").src = data.results[0].picture.thumbnail;//change profile picture
         random_entry = getRandomInt(tot_length);//get random number for database
-        document.getElementById("changetitle").innerHTML = json_data[random_entry].title; //change title, get random entry from database
+        document.getElementById("articletitle").innerHTML = json_data[random_entry].title; //change title, get random entry from database
     }
   });
-  document.getElementById("changedate").innerHTML = (new generateRandomDate()).toLocaleDateString('en-US'); //change date of the tweet
+  document.getElementById("postdate").innerHTML = (new generateRandomDate()).toLocaleString('en-US', { day:'numeric', month: 'long' }); //change date of the tweet
 }
 
 function generateRandomDate() { // Func for generating date between two days
@@ -67,3 +67,5 @@ function fake_or_real(random_entry){ //func for detecting fake or real
               return 1
             }
 }
+
+change_news()
