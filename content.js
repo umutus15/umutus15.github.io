@@ -85,14 +85,53 @@ function fake_or_real(random_entry){ //func for detecting fake or real
 }
 
 function show_overlay(action, news) {
+  // Remove background
+  document.getElementById("bg").classList.remove("positive-bg");
+  document.getElementById("bg").classList.remove("negative-bg");
+
+  // Display overlay
   document.getElementById("overlay").style.display = "block";
+  
+  // Clean HTML
   document.getElementById("overlay-txt").innerHTML = "";
-  var rel = "reliable."
-  if (news.reliability == "fake") {
-    rel = "unreliable."
+
+  // Check whether reliable or unreliable
+  reliability = "";
+  effect = "";
+  if (news.reliability == "real") {
+    reliability = "reliable";
+    if(action == "shared") {
+      effect = "greater positive";
+      document.getElementById("bg").classList.add("positive-bg");
+    }
+    if(action == "liked") {
+      effect = "lesser positive";
+      document.getElementById("bg").classList.add("positive-bg");
+    }
+    if(action == "reported") {
+      effect = "negative";
+      document.getElementById("bg").classList.add("negative-bg");
+    }
   }
-  document.getElementById("overlay-txt").innerHTML += "The news you " + action + " was " + rel;
-  document.getElementById("overlay-txt").innerHTML += "<br> Head over to the map to share it to the world";
+  if (news.reliability == "fake") {
+    reliability = "unreliable";
+    if(action == "shared") {
+      effect = "greater negative";
+      document.getElementById("bg").classList.add("negative-bg");
+    }
+    if(action == "liked") {
+      effect = "lesser negative";
+      document.getElementById("bg").classList.add("negative-bg");
+    }
+    if(action == "reported") {
+      effect = "positive";
+      document.getElementById("bg").classList.add("positive-bg");
+    }
+  }
+  
+  document.getElementById("overlay-txt").innerHTML += "The news you " + action + " was <b>"+reliability+".</b>"; 
+  document.getElementById("overlay-txt").innerHTML += "<br>This will have a <b>" + effect + "</b> effect.";  
+  document.getElementById("overlay-txt").innerHTML += "<br> Head over to the map to share it to the world.";
 }
 
 function hide_overlay() {
