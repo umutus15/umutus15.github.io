@@ -1,37 +1,28 @@
 
-/////////////////////////////////////////////////
+// Instantiate socket object on PORT 8081
 var socket = io('http://127.0.0.1:8081');
-   socket.on('connect', function() {
-        // sends to socket.io server the host/port of oscServer
-        // and oscClient
-        socket.emit('config',
-            {
-                server: {
-                    port: 3333,
-                    host: '127.0.0.1'
-                },
-                client: {
-                    port: 3334,
-                    host: '127.0.0.1'
-                }
+
+socket.on('connect', function() {
+    // sends to socket.io server the host/port of oscServer
+    // and oscClient
+    socket.emit('config',
+        {
+            server: {
+                port: 57120,
+                host: '127.0.0.1'
+            },
+            client: {
+                port: 55000,
+                host: '127.0.0.1'
             }
-        );
-    });
-
-    socket.on('message', function(obj) {
-        var status = document.getElementById("status");
-        status.innerHTML = obj[0];
-        console.log(obj);
-    });
-
-
-
-
-console.log("JS beginning")
+        }
+    );
+});
 
 var json_data = {}; //where our news titles are stored
 var current_news = {};
 var tot_length; // total entries in database
+const d = new Date(); // date variable for tweet date
 
 $.ajax({ //download the news database, pring how many entries there are
         url: "fake-news-filtered.json",
@@ -46,7 +37,6 @@ $.ajax({ //download the news database, pring how many entries there are
             current_news = json_data[random_entry];
         }
 });
-//console.log(json_data[random_entry].title)//testing
 
 
 //Associate buttons with functions
@@ -55,11 +45,7 @@ document.getElementById("sharebutton").addEventListener("click", share_button);;
 document.getElementById("reportbutton").addEventListener("click", report_button);
 
 
-const d = new Date(); // date variable for tweet date
-
 function like_button() {
-  socket.emit('message', '/foo/bar 1 2 3');
-
   console.log("Pressed Like!");
   show_overlay("liked", current_news);
 }
@@ -132,14 +118,17 @@ function show_overlay(action, news) {
   if (news.reliability == "real") {
     reliability = "reliable";
     if(action == "shared") {
+      sendOSCPositiveMessage("group");
       effect = "greater positive";
       document.getElementById("bg").classList.add("positive-bg");
     }
     if(action == "liked") {
+      sendOSCPositiveMessage("single");
       effect = "lesser positive";
       document.getElementById("bg").classList.add("positive-bg");
     }
     if(action == "reported") {
+      sendOSCNegativeMessage("single");
       effect = "negative";
       document.getElementById("bg").classList.add("negative-bg");
     }
@@ -147,14 +136,17 @@ function show_overlay(action, news) {
   if (news.reliability == "fake") {
     reliability = "unreliable";
     if(action == "shared") {
+      sendOSCNegativeMessage("group");
       effect = "greater negative";
       document.getElementById("bg").classList.add("negative-bg");
     }
     if(action == "liked") {
+      sendOSCNegativeMessage("single");
       effect = "lesser negative";
       document.getElementById("bg").classList.add("negative-bg");
     }
     if(action == "reported") {
+      sendOSCPositiveMessage("single")
       effect = "positive";
       document.getElementById("bg").classList.add("positive-bg");
     }
@@ -169,9 +161,17 @@ function hide_overlay() {
   document.getElementById("overlay").style.display = "none";
   change_news();
 }
+function sendOSCPositiveMessage(size) {
+  socket.emit('message', '/website/news positiveMessage '+ size);
+}
+
+function sendOSCNegativeMessage(size) {
+  socket.emit('message', '/website/news negativeMessage '+ size);
+}
 
 document.getElementById("overlay").addEventListener("click", hide_overlay);
-
 change_news();
+
+
 
 

@@ -1,6 +1,8 @@
+// Instantiate OSC object and listen to PORT 8081
 var osc = require('node-osc'),
-    io = require('socket.io').listen(8081);
+io = require('socket.io').listen(8081);
 
+// Instantiate OSC Server and Client
 var oscServer, oscClient;
 
 io.on('connection', function (socket) {
