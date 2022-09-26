@@ -1,3 +1,32 @@
+
+/////////////////////////////////////////////////
+var socket = io('http://127.0.0.1:8081');
+   socket.on('connect', function() {
+        // sends to socket.io server the host/port of oscServer
+        // and oscClient
+        socket.emit('config',
+            {
+                server: {
+                    port: 3333,
+                    host: '127.0.0.1'
+                },
+                client: {
+                    port: 3334,
+                    host: '127.0.0.1'
+                }
+            }
+        );
+    });
+
+    socket.on('message', function(obj) {
+        var status = document.getElementById("status");
+        status.innerHTML = obj[0];
+        console.log(obj);
+    });
+
+
+
+
 console.log("JS beginning")
 
 var json_data = {}; //where our news titles are stored
@@ -29,6 +58,8 @@ document.getElementById("reportbutton").addEventListener("click", report_button)
 const d = new Date(); // date variable for tweet date
 
 function like_button() {
+  socket.emit('message', '/foo/bar 1 2 3');
+
   console.log("Pressed Like!");
   show_overlay("liked", current_news);
 }
@@ -140,5 +171,7 @@ function hide_overlay() {
 }
 
 document.getElementById("overlay").addEventListener("click", hide_overlay);
+
+change_news();
 
 
