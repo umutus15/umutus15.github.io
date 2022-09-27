@@ -119,12 +119,12 @@ function show_overlay(action, news) {
     reliability = "reliable";
     if(action == "shared") {
       sendOSCPositiveMessage("group");
-      effect = "greater positive";
+      effect = "positive";
       document.getElementById("bg").classList.add("positive-bg");
     }
     if(action == "liked") {
       sendOSCPositiveMessage("single");
-      effect = "lesser positive";
+      effect = "positive";
       document.getElementById("bg").classList.add("positive-bg");
     }
     if(action == "reported") {
@@ -137,12 +137,12 @@ function show_overlay(action, news) {
     reliability = "unreliable";
     if(action == "shared") {
       sendOSCNegativeMessage("group");
-      effect = "greater negative";
+      effect = "negative";
       document.getElementById("bg").classList.add("negative-bg");
     }
     if(action == "liked") {
       sendOSCNegativeMessage("single");
-      effect = "lesser negative";
+      effect = "negative";
       document.getElementById("bg").classList.add("negative-bg");
     }
     if(action == "reported") {
@@ -154,7 +154,13 @@ function show_overlay(action, news) {
   
   document.getElementById("overlay-txt").innerHTML += "The news you " + action + " was <b>"+reliability+".</b>"; 
   document.getElementById("overlay-txt").innerHTML += "<br>This will have a <b>" + effect + "</b> effect.";  
-  document.getElementById("overlay-txt").innerHTML += "<br> Head over to the map to share it to the world.";
+  
+  if(action == "shared") {
+    document.getElementById("overlay-txt").innerHTML += "<br> Head over to the map to share it to the world.";
+  }
+  else {
+    document.getElementById("overlay-txt").innerHTML += "<br> A random citizen has started spreading it.";
+  }
 }
 
 function hide_overlay() {
