@@ -158,7 +158,7 @@ function show_overlay(action, news) {
     }
   }
   
-  document.getElementById("overlay-txt").innerHTML += "The news you " + action + " was <b>"+reliability+".</b>"; 
+  document.getElementById("overlay-txt").innerHTML += "The news you " + action + " was <b>"+reliability+".<br></b>"; 
   
   if (effect=="negative" || effect=="lesser negative" || effect=="greater negative"){
     document.getElementById("overlay-txt").innerHTML += "<br>This will have a <b><span style=\"color:#F00\">" + effect + "<span></b> effect.";  
@@ -174,8 +174,8 @@ function divs_fade_in_out(){
   document.getElementById("bg").style.opacity=1;
   document.getElementById("overlay-txt").style.opacity=1;
   //$(".bg , .overlay-txt").fadeTo("slow" ,0.05)
-  $("#bg").fadeTo("slow" ,0.05).promise().done(function(){
-    $("#overlay-txt").fadeTo("fast" ,0.05).promise().done(function(){
+  $("#bg").fadeTo(1000 ,0.05).promise().done(function(){
+    $("#overlay-txt").fadeTo(1000 ,0.05).promise().done(function(){
       hide_overlay();
     })
   })
