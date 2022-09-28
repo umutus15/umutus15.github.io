@@ -8,7 +8,7 @@ socket.on('connect', function() {
     socket.emit('config',
         {
             server: {
-                port: 57120,
+                port: 60000,
                 host: '127.0.0.1'
             },
             client: {
