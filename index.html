@@ -7,16 +7,21 @@
 <link rel="stylesheet" href="styles.css">  
 
 <body>
+  <div class="wrapper" style="position: relative;">
+    <div id="animated-background" class="animated-background animated-background--red" data-color="white"
+      style="z-index: 1; position: absolute; top: 0; left: 0;">
+      <canvas id="can0" width="1680" height="635"></canvas>
+    </div>
 
   <!-- Main Container-->
-  <div class="max-w-xl mx-auto my-6">
+  <div class="max-w-xl mx-auto my-6"style="z-index: 2; position: absolute; top: 0; left: 30%;">
     <!-- Logo and Social Name-->
-    <div class="logo hover:bg-gray-100">
+    <div class="logo hover:bg-gray-100 shadow rcorners1" style= "background-color: white">
       <img src="images/logo.png"/>
       <h1>TWIRRET</h1>
     </div>
     <!-- Article -->
-    <article class="border-t border-b border-gray-400 p-2 hover:bg-gray-100 flex flex-wrap items-start">
+    <article class="border-t border-b border-gray-400 p-2 hover:bg-gray-100 flex flex-wrap items-start rcorners2 shadow_purp" style= "background-color: white">
       <!-- User Picture -->
       <img id=userpic src="" class="rounded-full w-12 h-12 mr-3" />
       <div class="flex flex-wrap justify-start items-start flex-1">
