@@ -166,6 +166,12 @@ function show_overlay(action, news) {
   else if (effect=="positive" || effect=="lesser positive" || effect=="greater positive"){
     document.getElementById("overlay-txt").innerHTML += "<br>This will have a <b><span style=\"color:#008000\">" + effect + "<span></b> effect.";
   }
+  if(action == "shared") {
+    document.getElementById("overlay-txt").innerHTML += "<br><br> Head over to the map to share it to the world.";
+  }
+  else {
+    document.getElementById("overlay-txt").innerHTML += "<br><br> A random citizen has started spreading it.";
+  }
   
   //document.getElementById("overlay-txt").innerHTML += "<br> Head over to the map to share it to the world.";
 }
